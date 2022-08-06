@@ -1,32 +1,35 @@
 import db from "../db/db";
-import { VaccinationServiceLocationToInsert } from "../domain/vaccinationServiceLocation";
+import VaccinationServiceLocation, {
+  VaccinationServiceLocationToInsert,
+  VaccinationServiceLocationToUpdate,
+} from "../domain/vaccinationServiceLocation";
 
-class VaccinationServiceLocation {
+class VaccinationServiceLocationModel {
   public static table = "vaccination_service_location";
 
   public static async getVaccinationServiceLocations() {
     const vaccinationServiceLocations = await db(
-      VaccinationServiceLocation.table
+      VaccinationServiceLocationModel.table
     ).select();
 
     return vaccinationServiceLocations;
   }
 
   public static async getVaccinationServiceLocation(id: number) {
-    const vaccinationServiceLocations = await db(
-      VaccinationServiceLocation.table
+    const vaccinationServiceLocation = await db(
+      VaccinationServiceLocationModel.table
     )
       .where({ "vaccination_service_location.id": id })
       .select();
 
-    return vaccinationServiceLocations;
+    return vaccinationServiceLocation;
   }
 
   public static async createVaccinationServiceLocation(
     vaccinationServiceLocation: VaccinationServiceLocationToInsert
   ) {
     const createdVaccinationServiceLocation = db(
-      VaccinationServiceLocation.table
+      VaccinationServiceLocationModel.table
     ).insert(vaccinationServiceLocation, [
       "id",
       "province",
@@ -40,6 +43,19 @@ class VaccinationServiceLocation {
 
     return createdVaccinationServiceLocation;
   }
+
+  public static async updateVaccinationServiceLocation(
+    vaccinationServiceLocation: VaccinationServiceLocationToUpdate
+  ): Promise<VaccinationServiceLocation> {
+    const [updatedVaccinationServiceLocation] = await db(
+      VaccinationServiceLocationModel.table
+    )
+      .where({ id: vaccinationServiceLocation.id })
+      .update(vaccinationServiceLocation)
+      .returning(["id", "province"]);
+
+    return updatedVaccinationServiceLocation;
+  }
 }
 
-export default VaccinationServiceLocation;
+export default VaccinationServiceLocationModel;

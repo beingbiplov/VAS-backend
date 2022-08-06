@@ -60,3 +60,21 @@ export const createVaccinationService = async (
     message: "Vaccination service created successfully",
   };
 };
+
+/**
+ * Update an existing vaccination service.
+ * @param {VaccinationService} vaccinationService
+ * @returns {Promise<Success<VaccinationService>>}
+ */
+export const updateVaccinationService = async (
+  vaccinationService: VaccinationService
+): Promise<Success<VaccinationService>> => {
+  const updatedVaccinationService =
+    await VaccinationServiceModel.updateVaccinationService(vaccinationService);
+  logger.info("Vaccination service updated successfully");
+
+  return {
+    data: updatedVaccinationService,
+    message: "Vaccination service updated successfully",
+  };
+};

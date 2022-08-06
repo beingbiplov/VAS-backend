@@ -63,3 +63,36 @@ export const createVaccinationServiceLocation = (
     .then((data) => res.json(data))
     .catch((err) => next(err));
 };
+
+/**
+ * Update an existing vaccination location service.
+ * @param {Request} req
+ * @param {Response} res
+ */
+export const updateVaccinationServiceLocation = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id: number = +req.params.id;
+
+  const {
+    province,
+    city,
+    address,
+    distribution_start_date,
+    distribution_end_date,
+  } = req.body;
+
+  vaccinationServiceLocationService
+    .updateVaccinationServiceLocation({
+      id,
+      province,
+      city,
+      address,
+      distribution_start_date,
+      distribution_end_date,
+    })
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+};

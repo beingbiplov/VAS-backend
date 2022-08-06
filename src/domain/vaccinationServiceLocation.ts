@@ -12,3 +12,8 @@ export type VaccinationServiceLocationToInsert = Omit<
   VaccinationServiceLocation,
   "id"
 >;
+
+export type VaccinationServiceLocationToUpdate = Omit<
+  VaccinationServiceLocation,
+  "vaccination_service_id"
+>;

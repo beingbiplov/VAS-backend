@@ -1,11 +1,13 @@
 import db from "../db/db";
-import { VaccinationServiceToInsert } from "../domain/VaccinationService";
+import VaccinationService, {
+  VaccinationServiceToInsert,
+} from "../domain/VaccinationService";
 
-class VaccinationService {
+class VaccinationServiceModel {
   public static table = "vaccination_service";
 
   public static async getVaccinationServices() {
-    const vaccinationServices = await db(VaccinationService.table)
+    const vaccinationServices = await db(VaccinationServiceModel.table)
       .select([
         "vaccination_service.*",
         "vaccination_service_location.id as vaccination_service_location_id",
@@ -26,7 +28,7 @@ class VaccinationService {
   }
 
   public static async getVaccinationService(id: number) {
-    const vaccinationServices = await db(VaccinationService.table)
+    const vaccinationService = await db(VaccinationServiceModel.table)
       .where({ "vaccination_service.id": id })
       .select([
         "vaccination_service.*",
@@ -44,13 +46,13 @@ class VaccinationService {
         "vaccination_service_location.vaccination_service_id"
       );
 
-    return vaccinationServices;
+    return vaccinationService;
   }
 
   public static async createVaccinationService(
     vaccinationService: VaccinationServiceToInsert
   ) {
-    const createdVaccinationService = db(VaccinationService.table).insert(
+    const createdVaccinationService = db(VaccinationServiceModel.table).insert(
       vaccinationService,
       [
         "id",
@@ -64,6 +66,17 @@ class VaccinationService {
 
     return createdVaccinationService;
   }
+
+  public static async updateVaccinationService(
+    vaccinationService: VaccinationService
+  ): Promise<VaccinationService> {
+    const [updatedVaccinationService] = await db(VaccinationServiceModel.table)
+      .where({ id: vaccinationService.id })
+      .update(vaccinationService)
+      .returning(["id", "name"]);
+
+    return updatedVaccinationService;
+  }
 }
 
-export default VaccinationService;
+export default VaccinationServiceModel;

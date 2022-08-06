@@ -65,3 +65,36 @@ export const createVaccinationService = (
     .then((data) => res.json(data))
     .catch((err) => next(err));
 };
+
+/**
+ * Update an existing vaccination service.
+ * @param {Request} req
+ * @param {Response} res
+ */
+export const updateVaccinationService = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id: number = +req.params.id;
+
+  const {
+    name,
+    no_of_dose,
+    eligible_gender,
+    eligible_minimum_age,
+    eligible_ethnicity,
+  } = req.body;
+
+  vaccinationService
+    .updateVaccinationService({
+      id,
+      name,
+      no_of_dose,
+      eligible_gender,
+      eligible_minimum_age,
+      eligible_ethnicity,
+    })
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+};

@@ -1,5 +1,6 @@
 import VaccinationServiceLocation, {
   VaccinationServiceLocationToInsert,
+  VaccinationServiceLocationToUpdate,
 } from "../domain/vaccinationServiceLocation";
 import Success from "../domain/Success";
 import logger from "../misc/logger";
@@ -60,5 +61,25 @@ export const createVaccinationServiceLocation = async (
   return {
     data: createdVaccinationServiceLocation,
     message: "Vaccination service location created successfully",
+  };
+};
+
+/**
+ * Update an existing vaccination service location.
+ * @param {VaccinationServiceLocationToUpdate} vaccinationServiceLocation
+ * @returns {Promise<Success<VaccinationServiceLocation>>}
+ */
+export const updateVaccinationServiceLocation = async (
+  vaccinationServiceLocation: VaccinationServiceLocationToUpdate
+): Promise<Success<VaccinationServiceLocation>> => {
+  const updatedVaccinationServiceLocation =
+    await VaccinationServiceLocationModel.updateVaccinationServiceLocation(
+      vaccinationServiceLocation
+    );
+  logger.info("Vaccination service location updated successfully");
+
+  return {
+    data: updatedVaccinationServiceLocation,
+    message: "Vaccination service location updated successfully",
   };
 };
