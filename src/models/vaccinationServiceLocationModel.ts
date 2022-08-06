@@ -12,6 +12,16 @@ class VaccinationServiceLocation {
     return vaccinationServiceLocations;
   }
 
+  public static async getVaccinationServiceLocation(id: number) {
+    const vaccinationServiceLocations = await db(
+      VaccinationServiceLocation.table
+    )
+      .where({ "vaccination_service_location.id": id })
+      .select();
+
+    return vaccinationServiceLocations;
+  }
+
   public static async createVaccinationServiceLocation(
     vaccinationServiceLocation: VaccinationServiceLocationToInsert
   ) {

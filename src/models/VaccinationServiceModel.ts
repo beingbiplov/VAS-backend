@@ -25,6 +25,28 @@ class VaccinationService {
     return vaccinationServices;
   }
 
+  public static async getVaccinationService(id: number) {
+    const vaccinationServices = await db(VaccinationService.table)
+      .where({ "vaccination_service.id": id })
+      .select([
+        "vaccination_service.*",
+        "vaccination_service_location.id as vaccination_service_location_id",
+        "vaccination_service_location.province",
+        "vaccination_service_location.city",
+        "vaccination_service_location.address",
+        "vaccination_service_location.distribution_start_date",
+        "vaccination_service_location.distribution_end_date",
+      ])
+      .leftJoin(
+        "vaccination_service_location",
+        "vaccination_service.id",
+        "=",
+        "vaccination_service_location.vaccination_service_id"
+      );
+
+    return vaccinationServices;
+  }
+
   public static async createVaccinationService(
     vaccinationService: VaccinationServiceToInsert
   ) {

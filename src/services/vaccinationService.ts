@@ -24,6 +24,25 @@ export const getVaccinationServices = async (): Promise<
 };
 
 /**
+ * Get a single vaccination service by id.
+ * @param {number} id
+ * @returns {Promise<Success<VaccinationService>>}
+ */
+export const getVaccinationService = async (
+  id: number
+): Promise<Success<VaccinationService>> => {
+  logger.info(`Getting vaccination service with id: ${id}`);
+
+  const vaccinationService =
+    await VaccinationServiceModel.getVaccinationService(id);
+
+  return {
+    data: vaccinationService,
+    message: "Vaccination service fetched successfully",
+  };
+};
+
+/**
  * Create a new Vaccination Service.
  * @param {VaccinationServiceToInsert} VaccinationService
  * @returns {Promise<Success<VaccinationService>>}

@@ -19,6 +19,24 @@ export const getVaccinationServices = (
 };
 
 /**
+ * Get a single vaccination service.
+ * @param {Request} req
+ * @param {Response} res
+ */
+export const getVaccinationService = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  vaccinationService
+    .getVaccinationService(+id)
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+};
+
+/**
  * Create a new vaccination service.
  * @param {Request} req
  * @param {Response} res

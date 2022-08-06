@@ -24,6 +24,25 @@ export const getVaccinationServiceLocations = async (): Promise<
 };
 
 /**
+ * Get a single vaccination service location by id.
+ * @param {number} id
+ * @returns {Promise<Success<VaccinationServiceLocation>>}
+ */
+export const getVaccinationServiceLocation = async (
+  id: number
+): Promise<Success<VaccinationServiceLocation>> => {
+  logger.info(`Getting vaccination service location with id: ${id}`);
+
+  const vaccinationServiceLocation =
+    await VaccinationServiceLocationModel.getVaccinationServiceLocation(id);
+
+  return {
+    data: vaccinationServiceLocation,
+    message: "Vaccination service location fetched successfully",
+  };
+};
+
+/**
  * Create a new Vaccination Service Location.
  * @param {VaccinationServiceLocationToInsert} VaccinationServiceLocation
  * @returns {Promise<Success<VaccinationServiceLocation>>}
