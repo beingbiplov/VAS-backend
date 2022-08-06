@@ -5,8 +5,9 @@ export async function up(knex: Knex): Promise<void> {
     table.increments("id");
     table.string("name").notNullable();
     table.integer("no_of_dose").notNullable().unsigned();
-    table.date("distribution_start_date").notNullable();
-    table.date("distribution_end_date").notNullable();
+    table.string("eligible_gender").notNullable();
+    table.integer("eligible_minimum_age").notNullable().unsigned();
+    table.specificType("eligible_ethnicity", "text ARRAY");
     table.timestamp("created_at").defaultTo(knex.fn.now());
   });
 }
