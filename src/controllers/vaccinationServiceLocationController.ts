@@ -3,6 +3,22 @@ import { NextFunction, Request, Response } from "express";
 import * as vaccinationServiceLocationService from "../services/VaccinationServiceLocationService";
 
 /**
+ * Get all vaccination service locations.
+ * @param {Request} req
+ * @param {Response} res
+ */
+export const getVaccinationServiceLocations = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  vaccinationServiceLocationService
+    .getVaccinationServiceLocations()
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+};
+
+/**
  * Create a new vaccination service.
  * @param {Request} req
  * @param {Response} res

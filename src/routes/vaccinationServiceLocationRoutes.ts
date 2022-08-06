@@ -1,9 +1,13 @@
 import { Router } from "express";
 
-import { createVaccinationServiceLocation } from "../controllers/vaccinationServiceLocationController";
+import {
+  createVaccinationServiceLocation,
+  getVaccinationServiceLocations,
+} from "../controllers/vaccinationServiceLocationController";
 
 const router = Router();
 
 router.post("/", createVaccinationServiceLocation);
+router.get("/", getVaccinationServiceLocations);
 
 export default router;

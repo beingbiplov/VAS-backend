@@ -4,6 +4,14 @@ import { VaccinationServiceLocationToInsert } from "../domain/vaccinationService
 class VaccinationServiceLocation {
   public static table = "vaccination_service_location";
 
+  public static async getVaccinationServiceLocations() {
+    const vaccinationServiceLocations = await db(
+      VaccinationServiceLocation.table
+    ).select();
+
+    return vaccinationServiceLocations;
+  }
+
   public static async createVaccinationServiceLocation(
     vaccinationServiceLocation: VaccinationServiceLocationToInsert
   ) {

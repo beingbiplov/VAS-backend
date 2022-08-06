@@ -6,6 +6,24 @@ import logger from "../misc/logger";
 import VaccinationServiceModel from "../models/VaccinationServiceModel";
 
 /**
+ * Get all the vaccination services.
+ * @returns {Promise<Success<VaccinationService>>}
+ */
+export const getVaccinationServices = async (): Promise<
+  Success<VaccinationService[]>
+> => {
+  logger.info("Getting all vaccination services");
+
+  const vaccinationService =
+    await VaccinationServiceModel.getVaccinationServices();
+
+  return {
+    data: vaccinationService,
+    message: "Vaccination services fetched successfully",
+  };
+};
+
+/**
  * Create a new Vaccination Service.
  * @param {VaccinationServiceToInsert} VaccinationService
  * @returns {Promise<Success<VaccinationService>>}

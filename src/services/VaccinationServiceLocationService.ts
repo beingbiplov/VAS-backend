@@ -6,6 +6,24 @@ import logger from "../misc/logger";
 import VaccinationServiceLocationModel from "../models/vaccinationServiceLocationModel";
 
 /**
+ * Get all the vaccination service locations.
+ * @returns {Promise<Success<VaccinationServiceLocation>>}
+ */
+export const getVaccinationServiceLocations = async (): Promise<
+  Success<VaccinationServiceLocation[]>
+> => {
+  logger.info("Getting all vaccination service locations");
+
+  const vaccinationServiceLocation =
+    await VaccinationServiceLocationModel.getVaccinationServiceLocations();
+
+  return {
+    data: vaccinationServiceLocation,
+    message: "Vaccination service locations fetched successfully",
+  };
+};
+
+/**
  * Create a new Vaccination Service Location.
  * @param {VaccinationServiceLocationToInsert} VaccinationServiceLocation
  * @returns {Promise<Success<VaccinationServiceLocation>>}
