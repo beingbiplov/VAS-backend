@@ -77,6 +77,10 @@ class VaccinationServiceModel {
 
     return updatedVaccinationService;
   }
+
+  public static async deleteVaccinationService(id: number): Promise<void> {
+    await db(VaccinationServiceModel.table).where({ id: id }).delete();
+  }
 }
 
 export default VaccinationServiceModel;

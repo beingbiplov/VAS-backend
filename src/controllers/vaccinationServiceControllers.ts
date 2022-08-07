@@ -98,3 +98,21 @@ export const updateVaccinationService = (
     .then((data) => res.json(data))
     .catch((err) => next(err));
 };
+
+/**
+ * Delete an existing vaccination service.
+ * @param {Request} req
+ * @param {Response} res
+ */
+export const deleteVaccinationService = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  vaccinationService
+    .deleteVaccinationService(+id)
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+};

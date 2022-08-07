@@ -78,3 +78,20 @@ export const updateVaccinationService = async (
     message: "Vaccination service updated successfully",
   };
 };
+
+/**
+ * Delete an existing vaccination service.
+ * @param {number} id
+ * @returns {Promise<Success<VaccinationService>>}
+ */
+export const deleteVaccinationService = async (
+  id: number
+): Promise<Success<VaccinationService>> => {
+  await VaccinationServiceModel.deleteVaccinationService(id);
+
+  logger.info("Vaccination service deleted successfully");
+
+  return {
+    message: "Vaccination service deleted successfully",
+  };
+};
