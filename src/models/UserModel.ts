@@ -33,6 +33,19 @@ class UserModel {
     );
   }
 
+  public static async getUserByEmail(email: string): Promise<UserInterface> {
+    const user = await db(UserModel.table)
+      .where({ email: email, is_active: true })
+      .first();
+    if (user) {
+      return user;
+    }
+    throw new CustomError(
+      "Active User for the email does not exist.",
+      StatusCodes.NOT_FOUND
+    );
+  }
+
   public static async createUser(user: UserToInsertInterface) {
     console.log(user);
     const createdUser = db(UserModel.table).insert(

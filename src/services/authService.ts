@@ -1,18 +1,22 @@
 import { StatusCodes } from "http-status-codes";
 
-import { userAuthData, UserToReturn } from "../domain/User";
-import * as UserModel from "../models/UserModel";
+import { userAuthData, UserToReturnInterface } from "../domain/User";
+import UserModel from "../models/UserModel";
 import Success from "../domain/Success";
 import CustomError from "../misc/CustomError";
-import logger from "../misc/logger";
+import { checkPasswordMatch } from "../utils/common";
 
 export const authenticateUser = async (
   userData: userAuthData
-): Promise<Success<UserToReturn>> => {
-  logger.info("Authenticating user");
-  const matchedUser = await UserModel.authenticateUser(userData.email);
+): Promise<Success<UserToReturnInterface>> => {
+  const matchedUser = await UserModel.getUserByEmail(userData.email);
+  console.log(matchedUser, userData);
+  const isPasswordCorrect = await checkPasswordMatch(
+    matchedUser.password,
+    userData.password
+  );
 
-  if (matchedUser.password === userData.password) {
+  if (isPasswordCorrect) {
     const { password, ...dataToReturn } = matchedUser;
     return {
       data: dataToReturn,
@@ -20,7 +24,7 @@ export const authenticateUser = async (
     };
   } else {
     throw new CustomError(
-      "Username or password didn't match!",
+      "Username and password didn't match!",
       StatusCodes.UNAUTHORIZED
     );
   }
