@@ -1,9 +1,9 @@
-export interface User {
+export default interface UserInterface {
   id: number;
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  is_admin?: boolean;
+  is_active?: boolean;
 }
 
 export interface userAuthData {
@@ -11,4 +11,6 @@ export interface userAuthData {
   password: string;
 }
 
-export type UserToReturn = Omit<User, "password">;
+export type UserToInsertInterface = Omit<UserInterface, "id">;
+
+export type UserToReturnInterface = Omit<UserInterface, "password">;

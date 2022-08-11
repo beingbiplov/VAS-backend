@@ -8,7 +8,7 @@ import appointmentRoutes from "./appointmentRoutes";
 
 const router = Router();
 
-router.use("/users", userRoutes);
+router.use("/user", userRoutes);
 router.use("/vaccination-service", vaccinationServiceRoutes);
 router.use("/vaccination-service-location", vaccinationServiceLocationRoutes);
 router.use("/patient", patientRoutes);
