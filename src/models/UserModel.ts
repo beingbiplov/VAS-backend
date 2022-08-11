@@ -52,7 +52,6 @@ class UserModel {
       user,
       UserModel.userToReturnFields
     );
-    console.log(createdUser);
 
     return createdUser;
   }

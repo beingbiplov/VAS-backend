@@ -8,14 +8,21 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/userController";
+import { logout } from "../controllers/authController";
+import authenticate from "../middleware/authenticate";
 
 const router = Router();
+
+router.use("/auth", AuthenticationRoutes);
+
+router.use(authenticate);
+
+router.delete("/logout", logout);
 
 router.get("/", getUsers);
 router.get("/:id", getUser);
 router.post("/", createUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
-router.use("/auth", AuthenticationRoutes);
 
 export default router;
