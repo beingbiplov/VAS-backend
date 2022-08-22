@@ -8,6 +8,11 @@ export default interface VaccinationServiceLocation {
   vaccination_service_id: number;
 }
 
+export type VaccinationServiceLocationDataToInsert = Omit<
+  VaccinationServiceLocation,
+  "id" | "vaccination_service_id"
+>;
+
 export type VaccinationServiceLocationToInsert = Omit<
   VaccinationServiceLocation,
   "id"
