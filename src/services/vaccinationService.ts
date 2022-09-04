@@ -4,6 +4,9 @@ import VaccinationService, {
 import Success from "../domain/Success";
 import logger from "../misc/logger";
 import VaccinationServiceModel from "../models/VaccinationServiceModel";
+import VaccinationServiceLocationModel from "../models/vaccinationServiceLocationModel";
+import CustomError from "../misc/CustomError";
+import { StatusCodes } from "http-status-codes";
 
 /**
  * Get all the vaccination services.
@@ -48,10 +51,28 @@ export const getVaccinationService = async (
  * @returns {Promise<Success<VaccinationService>>}
  */
 export const createVaccinationService = async (
-  vaccinationService: VaccinationServiceToInsert
-): Promise<Success<VaccinationService>> => {
+  vaccinationServiceData: VaccinationServiceToInsert
+): Promise<Success<VaccinationService | void>> => {
+  const { serviceLocation, ...vaccinationService } = vaccinationServiceData;
+
   const createdVaccinationService =
-    await VaccinationServiceModel.createVaccinationService(vaccinationService);
+    await VaccinationServiceModel.createVaccinationService(vaccinationService)
+      .then(async (data) => {
+        const location =
+          await VaccinationServiceLocationModel.createVaccinationServiceLocation(
+            {
+              vaccination_service_id: data[0].id,
+              ...serviceLocation,
+            }
+          ).catch((err) => {
+            VaccinationServiceModel.deleteVaccinationService(data[0].id);
+            throw new CustomError(err, StatusCodes.INTERNAL_SERVER_ERROR);
+          });
+        return { serviceLocation: location[0], ...data[0] };
+      })
+      .catch((err) => {
+        throw new CustomError(err, StatusCodes.INTERNAL_SERVER_ERROR);
+      });
 
   logger.info("Vaccination service created successfully");
 

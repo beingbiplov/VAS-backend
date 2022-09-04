@@ -52,6 +52,7 @@ export const createVaccinationService = (
     eligible_gender,
     eligible_minimum_age,
     eligible_ethnicity,
+    serviceLocation,
   } = req.body;
 
   vaccinationService
@@ -61,6 +62,7 @@ export const createVaccinationService = (
       eligible_gender,
       eligible_minimum_age,
       eligible_ethnicity,
+      serviceLocation,
     })
     .then((data) => res.json(data))
     .catch((err) => next(err));
@@ -84,6 +86,7 @@ export const updateVaccinationService = (
     eligible_gender,
     eligible_minimum_age,
     eligible_ethnicity,
+    serviceLocation,
   } = req.body;
 
   vaccinationService
@@ -94,6 +97,7 @@ export const updateVaccinationService = (
       eligible_gender,
       eligible_minimum_age,
       eligible_ethnicity,
+      serviceLocation,
     })
     .then((data) => res.json(data))
     .catch((err) => next(err));

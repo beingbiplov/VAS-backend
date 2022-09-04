@@ -1,6 +1,6 @@
 import db from "../db/db";
 import VaccinationService, {
-  VaccinationServiceToInsert,
+  VaccinationServiceDataOnly,
 } from "../domain/VaccinationService";
 
 class VaccinationServiceModel {
@@ -50,7 +50,7 @@ class VaccinationServiceModel {
   }
 
   public static async createVaccinationService(
-    vaccinationService: VaccinationServiceToInsert
+    vaccinationService: VaccinationServiceDataOnly
   ) {
     const createdVaccinationService = db(VaccinationServiceModel.table).insert(
       vaccinationService,

@@ -8,5 +8,11 @@ interface TokenPayload {
   data: number;
 }
 
+export interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  userData: {};
+}
+
 export type AuthRequest = AuthorizedRequest;
 export type DataStoredInToken = TokenPayload;

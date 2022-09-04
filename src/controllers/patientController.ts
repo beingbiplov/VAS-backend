@@ -43,8 +43,8 @@ export const createPatient = (
   next: NextFunction
 ) => {
   const {
-    first_name,
-    last_name,
+    firstName,
+    lastname,
     email,
     date_of_birth,
     ethnicity,
@@ -55,8 +55,8 @@ export const createPatient = (
 
   patientService
     .createdPatient({
-      first_name,
-      last_name,
+      first_name: firstName,
+      last_name: lastname,
       email,
       date_of_birth: new Date(date_of_birth),
       ethnicity,

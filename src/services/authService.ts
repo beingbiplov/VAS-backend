@@ -9,10 +9,11 @@ import { checkPasswordMatch } from "../utils/common";
 import TokenInterface from "../domain/Token";
 import RefreshToken from "../models/RefreshToken";
 import { createAccessToken, createRefreshToken } from "../utils/jwtToken";
+import { LoginResponse } from "../domain/Authenticate";
 
 export const authenticateUser = async (
   userData: userAuthData
-): Promise<Success<TokenInterface>> => {
+): Promise<Success<LoginResponse>> => {
   const matchedUser = await UserModel.getUserByEmail(userData.email);
 
   const isPasswordCorrect = await checkPasswordMatch(
@@ -34,7 +35,7 @@ export const authenticateUser = async (
     });
 
     return {
-      data: { accessToken, refreshToken },
+      data: { accessToken, refreshToken, userData: dataToReturn },
       message: "User login successful!",
     };
   } else {
